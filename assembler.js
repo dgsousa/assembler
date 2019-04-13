@@ -97,8 +97,9 @@ function firstPass(instructionArray) {
   });
 }
 
+
 function secondPass(instructionArray) {
-  let varStart = 16;
+  let nextVarAddress = 16;
   return instructionArray.map(line => {
     if(line[0] === '@') {
       const val = line.substring(1, line.length);
@@ -106,10 +107,10 @@ function secondPass(instructionArray) {
       else if(Number(val)) return convertToBinary(Number(val));
       else if(symbolTable[val]) return convertToBinary(symbolTable[val]);
       else {
-        const variable = convertToBinary(varStart);
-        symbolTable[val] = varStart; 
-        varStart++;
-        return variable;
+        const address = convertToBinary(nextVarAddress);
+        symbolTable[val] = nextVarAddress; 
+        nextVarAddress++;
+        return address;
       } 
     } else {
       return parseCommand(line);
